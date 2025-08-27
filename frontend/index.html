@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Sync Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Game Sync Dashboard</h1>
+        </header>
+
+        <main>
+            <div class="content">
+                <!-- Sync Controls Section -->
+                <div class="sync-controls-section">
+                    <div class="sync-buttons">
+                        <button id="manualSyncBtn" class="btn btn-primary">
+                            🔄 Manual Sync
+                        </button>
+                        <button id="multiGameSyncBtn" class="btn btn-success">
+                            🎮 Multi-Game Auto-Sync
+                        </button>
+                    </div>
+                    
+                    <!-- Multi-Game Auto-Sync Status and Timers -->
+                    <div id="multiGameSyncStatus" class="multi-game-sync-status">
+                        <div class="status-header">
+                            <span class="sync-icon">🔄</span>
+                            <span class="status-text">Multi-Game Auto-Sync OFF</span>
+                        </div>
+                        <div id="gameTimers" class="game-timers">
+                            <!-- Game timers will be populated here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <div id="loadingOverlay" class="loading-overlay hidden">
+            <div class="loading-spinner"></div>
+            <p>Loading...</p>
+        </div>
+
+        <div id="notification" class="notification hidden"></div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

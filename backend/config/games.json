@@ -1,0 +1,97 @@
+{
+  "games": [
+    {
+      "TYPE_NAME": "MotorRacing",
+      "FEED_ID": 90,
+      "GAME_DURATION_VALUE": 240,
+      "DESCRIPTION": "Motor Racing - 4 minute games",
+      "ENABLED": false
+    },
+    {
+      "TYPE_NAME": "SteepleChase",
+      "FEED_ID": 90,
+      "GAME_DURATION_VALUE": 480,
+      "DESCRIPTION": "SteepleChase - 8 minute games",
+      "ENABLED": false
+    },
+    {
+      "TYPE_NAME": "SpeedSkating",
+      "FEED_ID": 90,
+      "GAME_DURATION_VALUE": 480,
+      "DESCRIPTION": "SpeedSkating - 8 minute games",
+      "ENABLED": false
+    },
+    {
+      "TYPE_NAME": "DashingDerby",
+      "FEED_ID": 12,
+      "GAME_DURATION_VALUE": 600,
+      "DESCRIPTION": "DashingDerby - 10 minute games",
+      "ENABLED": false
+    },
+    {
+      "TYPE_NAME": "HarnessRacing",
+      "FEED_ID": 90,
+      "GAME_DURATION_VALUE": 720,
+      "DESCRIPTION": "HarnessRacing - 12 minute games",
+      "ENABLED": false
+    },
+    {
+      "TYPE_NAME": "SmartPlayKeno",
+      "FEED_ID": 90,
+      "GAME_DURATION_VALUE": 240,
+      "DESCRIPTION": "SmartPlayKeno - 4 minute games",
+      "ENABLED": true
+    },
+    {
+      "TYPE_NAME": "HorseRacing",
+      "FEED_ID": 90,
+      "GAME_DURATION_VALUE": 180,
+      "DESCRIPTION": "HorseRacing - 3 minute games",
+      "ENABLED": false
+    },
+    {
+      "TYPE_NAME": "PlatinumHounds",
+      "FEED_ID": 12,
+      "GAME_DURATION_VALUE": 600,
+      "DESCRIPTION": "PlatinumHounds - 10 minute games",
+      "ENABLED": false
+    },
+    {
+      "TYPE_NAME": "HorseRacingRouletteV2",
+      "FEED_ID": 90,
+      "GAME_DURATION_VALUE": 480,
+      "DESCRIPTION": "HorseRacingRouletteV2 - 8 minute games",
+      "ENABLED": false
+    },
+    {
+      "TYPE_NAME": "CycleRacing",
+      "FEED_ID": 90,
+      "GAME_DURATION_VALUE": 240,
+      "DESCRIPTION": "CycleRacing - 4 minute games",
+      "ENABLED": false
+    },
+    {
+      "TYPE_NAME": "SingleSeaterMotorRacing",
+      "FEED_ID": 90,
+      "GAME_DURATION_VALUE": 480,
+      "DESCRIPTION": "SingleSeaterMotorRacing - 8 minute games",
+      "ENABLED": false
+    },
+    {
+      "TYPE_NAME": "SpinAndWin",
+      "FEED_ID": 90,
+      "GAME_DURATION_VALUE": 240,
+      "DESCRIPTION": "SpinAndWin - 4 minute games",
+      "ENABLED": false
+    }
+  ],
+  "defaults": {
+    "SESSION_GUID": "MAJAS",
+    "OPERATOR_GUID": "titest",
+    "API_BASE": "https://retail2.pleybetman.com",
+    "OFFSET_SECONDS": 10800,
+    "PRIMARY_MARKET_CLASS_IDS": ["1", "2"],
+    "LANGUAGE_CODE": "en",
+    "BETTING_LAYOUT_ENUM_VALUE": "1"
+  }
+}

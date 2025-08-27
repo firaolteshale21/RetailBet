@@ -1,0 +1,45 @@
+{
+  "name": "retail-demo-backend",
+  "version": "1.0.0",
+  "description": "Backend for retail demo - captures API responses with JSONB storage",
+  "type": "module",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js",
+    "ingest:list": "node -e \"import('./src/ingest.js').then(m => m.ingestList())\"",
+    "ingest:detail": "node -e \"import('./src/ingest.js').then(m => m.ingestDetail(process.argv[1]))\"",
+    "test": "echo \"No tests yet\" && exit 0",
+    "test:connectivity": "node test-connectivity.js",
+    "test:results": "node test-results.js",
+    "migrate:add-number": "node run-migration.js",
+    "fix:events-table": "node fix-events-table.js",
+    "test:add-results": "node test-add-results.js",
+    "test:keno": "node test-keno-extraction.js",
+    "add:game-number-to-events": "node add-game-number-to-events.js",
+    "test:robust-sync": "node test-robust-auto-sync.js"
+  },
+  "dependencies": {
+    "axios": "^1.6.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "logger": "^0.0.1",
+    "pg": "^8.11.3",
+    "pino": "^8.17.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "keywords": [
+    "retail",
+    "api",
+    "jsonb",
+    "postgresql"
+  ],
+  "author": "Senior Engineer",
+  "license": "MIT",
+  "devDependencies": {
+    "pino-pretty": "^13.1.1"
+  }
+}
