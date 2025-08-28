@@ -2,7 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import { config } from './config.js';
 import { logger } from './logger.js';
-import { testConnection, getRows } from './db.js';
+import { testConnection, getRows, query } from './db.js';
 import { testApiConnection } from './api.js';
 import { getEvents, getEvent, upsertGameResult, getGameResult, getGameResults, getEventsWithResults } from './db.js';
 import { gameManager } from './games.js';
@@ -16,6 +16,10 @@ import {
   manualRobustGameSync,
   getRobustSyncStats 
 } from './robust-auto-sync.js';
+
+// Import bet slip booking handler
+import { handleBooking } from './booking-endpoint.js';
+import { getBetSlip, updateBetSlipStatus } from './betSlips/storage.js';
 
 const app = express();
 
@@ -146,6 +150,118 @@ app.get('/api/games', (req, res) => {
 
 
 
+
+// ===== BET SLIP BOOKING ENDPOINT =====
+
+app.post('/booking', async (req, res) => {
+  // Temporary: Log the exact request data for debugging
+  logger.info('🔍 FRONTEND REQUEST CAPTURED:');
+  logger.info('📋 Headers:', JSON.stringify(req.headers, null, 2));
+  logger.info('📋 Body:', JSON.stringify(req.body, null, 2));
+  logger.info('📋 Body type:', typeof req.body);
+  logger.info('📋 BetObject type:', typeof req.body.BetObject);
+  logger.info('📋 BetObject length:', req.body.BetObject ? req.body.BetObject.length : 'null');
+  
+  await handleBooking(req, res);
+});
+
+// Get bet slip by ID
+app.get('/api/betslips/:slipId', async (req, res) => {
+  try {
+    const { slipId } = req.params;
+    const betSlip = await getBetSlip(slipId);
+    
+    if (!betSlip) {
+      return res.status(404).json({
+        success: false,
+        error: 'Bet slip not found'
+      });
+    }
+    
+    res.json({
+      success: true,
+      betSlip
+    });
+  } catch (error) {
+    logger.error('Get bet slip endpoint error:', error);
+    res.status(500).json({
+      success: false,
+      error: error.message
+    });
+  }
+});
+
+// Update bet slip status
+app.put('/api/betslips/:slipId/status', async (req, res) => {
+  try {
+    const { slipId } = req.params;
+    const { status, changedBy, reason } = req.body;
+    
+    if (!status) {
+      return res.status(400).json({
+        success: false,
+        error: 'Status is required'
+      });
+    }
+    
+    const result = await updateBetSlipStatus(slipId, status, changedBy, reason);
+    
+    res.json({
+      success: true,
+      result
+    });
+  } catch (error) {
+    logger.error('Update bet slip status endpoint error:', error);
+    res.status(500).json({
+      success: false,
+      error: error.message
+    });
+  }
+});
+
+// Get all bet slips (for monitoring)
+app.get('/api/betslips', async (req, res) => {
+  try {
+    const { status, limit = 50 } = req.query;
+    
+    let query = `
+      SELECT 
+        bs.slip_id,
+        bs.game_name,
+        bs.game_number,
+        bs.total_stake,
+        bs.status,
+        bs.redeem_code,
+        bs.placed_at,
+        COUNT(bse.id) as selection_count
+      FROM bet_slips bs
+      LEFT JOIN bet_selections bse ON bs.slip_id = bse.slip_id
+    `;
+    
+    const params = [];
+    if (status) {
+      query += ` WHERE bs.status = $1`;
+      params.push(status);
+    }
+    
+    query += ` GROUP BY bs.id, bs.slip_id ORDER BY bs.placed_at DESC LIMIT $${params.length + 1}`;
+    params.push(parseInt(limit));
+    
+    const result = await query(query, params);
+    
+    res.json({
+      success: true,
+      count: result.rows.length,
+      betSlips: result.rows
+    });
+  } catch (error) {
+    logger.error('Get bet slips endpoint error:', error);
+    res.status(500).json({
+      success: false,
+      error: error.message
+    });
+  }
+});
 
 // ===== ROBUST AUTO-SYNC ENDPOINTS =====
 
